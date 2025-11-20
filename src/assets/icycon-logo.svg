@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 90" role="img" aria-label="ICYCON logo">
+  <defs>
+    <linearGradient id="icycon-core" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0e4fa3" />
+      <stop offset="100%" stop-color="#1fc7ff" />
+    </linearGradient>
+    <linearGradient id="icycon-text" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#073b7a" />
+      <stop offset="100%" stop-color="#1db7ff" />
+    </linearGradient>
+  </defs>
+  <rect width="320" height="90" fill="transparent" />
+  <path
+    d="M56 12 L82 38 L56 64 L30 38 Z"
+    fill="url(#icycon-core)"
+    transform="translate(10 5) scale(1.1)"
+  />
+  <text x="120" y="57" fill="url(#icycon-text)" font-family="Space Grotesk, 'Segoe UI', sans-serif" font-weight="800" font-size="40">
+    ICYCON
+  </text>
+</svg>
