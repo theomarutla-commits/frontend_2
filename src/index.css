@@ -20,6 +20,7 @@
   --glow-strong: rgba(0, 199, 255, 0.12);
   --accent-strong: #35b8ff;
   --accent-contrast: rgba(53, 184, 255, 0.08);
+  --theme-transition: 8s;
 }
 
 body {
@@ -30,6 +31,7 @@ body {
     radial-gradient(circle at 50% 80%, rgba(6, 65, 122, 0.2), transparent 35%),
     var(--bg-gradient);
   color: var(--text-primary);
+  transition: background var(--theme-transition) ease-in-out, color var(--theme-transition) ease;
 }
 
 * {

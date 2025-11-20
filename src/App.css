@@ -7,6 +7,7 @@
   margin: 0 auto;
   padding: 32px 24px 72px;
   color: var(--text-primary);
+  transition: color var(--theme-transition) ease, background-color var(--theme-transition) ease;
 }
 
 .card {
@@ -15,6 +16,8 @@
   border-radius: 16px;
   padding: 20px;
   box-shadow: 0 16px 60px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(53, 184, 255, 0.04);
+  transition: background-color var(--theme-transition) ease, color var(--theme-transition) ease, border-color var(--theme-transition) ease,
+    box-shadow var(--theme-transition) ease;
 }
 
 .topbar {
@@ -34,6 +37,13 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.22);
   position: sticky;
   overflow: hidden;
+  transition: background var(--theme-transition) ease, border-color var(--theme-transition) ease, box-shadow var(--theme-transition) ease;
+}
+
+.theme-light .topbar {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(12, 35, 64, 0.08);
+  box-shadow: 0 12px 40px rgba(12, 35, 64, 0.12);
 }
 
 .topbar::after {
@@ -70,13 +80,58 @@
 .nav-links a {
   padding: 6px 8px;
   border-radius: 8px;
-  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.theme-light .nav-links {
+  color: var(--text-primary);
 }
 
 .nav-links a:hover {
+  color: #ffffff;
+  background: linear-gradient(135deg, #0e6ad6 0%, #1fc7ff 100%);
+  box-shadow: 0 0 0 2px rgba(53, 184, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.theme-light .nav-links a:hover {
   color: var(--text-primary);
   background: var(--accent-contrast);
-  box-shadow: 0 0 0 4px var(--glow-strong);
+  box-shadow: 0 0 0 2px rgba(14, 106, 214, 0.12);
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 4px;
+  height: 2px;
+  background: linear-gradient(135deg, #0e6ad6 0%, #1fc7ff 100%);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s ease;
+  pointer-events: none;
+}
+
+.nav-links a:hover::after {
+  transform: scaleX(1);
+}
+
+input,
+.btn,
+.pill,
+.auth-form,
+.module-card,
+.automation,
+.compliance,
+.metric,
+.experiment-row,
+.auth {
+  transition: background-color var(--theme-transition) ease, color var(--theme-transition) ease, border-color var(--theme-transition) ease,
+    box-shadow var(--theme-transition) ease;
 }
 
 .eyebrow {
@@ -109,6 +164,23 @@
 .theme-toggle:hover {
   border-color: var(--accent-strong);
   box-shadow: 0 0 0 4px var(--glow-strong);
+}
+
+.auto-theme-btn {
+  padding: 8px 11px;
+  border-radius: 10px;
+  border: 1px dashed var(--border-subtle);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.auto-theme-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--accent-strong);
+  box-shadow: 0 0 0 3px var(--glow-strong);
 }
 
 .toggle-thumb {
@@ -244,6 +316,8 @@
   border-radius: 12px;
   background: var(--bg-elevated);
   border: 1px solid var(--border-subtle);
+  transition: background-color var(--theme-transition) ease, border-color var(--theme-transition) ease, color var(--theme-transition) ease,
+    box-shadow var(--theme-transition) ease;
 }
 
 .kpi-label {
@@ -354,6 +428,8 @@ input:focus {
   border: 1px solid var(--border-subtle);
   padding: 10px;
   border-radius: 10px;
+  transition: background-color var(--theme-transition) ease, border-color var(--theme-transition) ease, color var(--theme-transition) ease,
+    box-shadow var(--theme-transition) ease;
 }
 
 .template-title {
