@@ -31,6 +31,10 @@ body {
     radial-gradient(circle at 50% 80%, rgba(6, 65, 122, 0.2), transparent 35%),
     var(--bg-gradient);
   color: var(--text-primary);
+  background-size: 140% 140%, 150% 150%, 160% 160%, 100% 100%;
+  animation: bgDrift 24s ease-in-out infinite alternate;
+  position: relative;
+  overflow-x: hidden;
   transition: background var(--theme-transition) ease-in-out, color var(--theme-transition) ease;
 }
 
@@ -45,6 +49,21 @@ a {
 
 button {
   font: inherit;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: -120px;
+  background-image: url('./assets/icycon-logo.svg');
+  background-repeat: no-repeat;
+  background-position: calc(50% + 140px) calc(50% - 80px);
+  background-size: 240px;
+  opacity: 0.06;
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.3));
+  animation: driftLogo 24s ease-in-out infinite alternate, hueFloat 18s linear infinite;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .theme-light {
@@ -71,4 +90,40 @@ button {
   --glow-strong: rgba(0, 199, 255, 0.12);
   --accent-strong: #35b8ff;
   --accent-contrast: rgba(53, 184, 255, 0.08);
+}
+
+@keyframes bgDrift {
+  0% {
+    background-position: 0% 0%, 20% 0%, 80% 20%, 0% 0%;
+  }
+  50% {
+    background-position: 10% 8%, 16% 6%, 74% 28%, 10% 8%;
+  }
+  100% {
+    background-position: -8% -6%, 12% -4%, 70% 12%, -8% -6%;
+  }
+}
+
+@keyframes driftLogo {
+  0% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translateY(-18px) rotate(2deg) scale(1.03);
+  }
+  100% {
+    transform: translateY(12px) rotate(-2deg) scale(0.98);
+  }
+}
+
+@keyframes hueFloat {
+  0% {
+    filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.3)) hue-rotate(0deg) saturate(1);
+  }
+  50% {
+    filter: drop-shadow(0 36px 70px rgba(0, 0, 0, 0.32)) hue-rotate(28deg) saturate(1.2);
+  }
+  100% {
+    filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.3)) hue-rotate(-18deg) saturate(1.05);
+  }
 }

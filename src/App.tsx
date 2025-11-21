@@ -58,12 +58,49 @@ const templates = [
 ]
 
 const channels = ['SEO', 'GEO/AEO', 'Social', 'Email/SMS', 'ASO']
+const featureLinks = [
+  { label: 'Prompt Engine', to: '/' },
+  { label: 'Modules', to: '/modules' },
+  { label: 'Automation', to: '/automation' },
+  { label: 'Analytics', to: '/analytics' },
+  { label: 'Access', to: '/access' },
+  { label: 'About', to: '/about' },
+]
+
+const featureKPIs = [
+  { label: 'Prompt Engine', primary: '142 briefs', secondary: '68% publish rate', delta: '+12% vs last week', status: 'Healthy' },
+  { label: 'Automation', primary: '318 runs', secondary: '94.2% success', delta: '+6.2% uptime', status: 'Stable' },
+  { label: 'Compliance', primary: '27 blocks', secondary: '8 warnings', delta: '+3 policy hits', status: 'Watch' },
+  { label: 'Analytics', primary: '1.8k events', secondary: '82% data freshness', delta: '+9 pts freshness', status: 'Healthy' },
+]
+
+const featureTrends = [
+  { label: 'Prompt Engine', values: [62, 68, 64, 70, 74, 76, 81] },
+  { label: 'Automation', values: [88, 86, 90, 92, 91, 93, 94] },
+  { label: 'Compliance', values: [32, 28, 30, 35, 33, 31, 29] },
+  { label: 'Analytics', values: [70, 72, 75, 78, 79, 80, 82] },
+]
+
+const channelMix = [
+  { label: 'SEO / AEO', value: 62 },
+  { label: 'Social', value: 18 },
+  { label: 'Email / SMS', value: 14 },
+  { label: 'ASO', value: 6 },
+]
+
+const accessStats = [
+  { label: 'Active workspaces', value: '42', note: '+5 this week' },
+  { label: 'Team members', value: '311', note: '42 pending invites' },
+  { label: 'SSO sessions', value: '1,284', note: '+9.3% WoW' },
+  { label: 'Guardrail blocks', value: '27', note: 'Policy: GDPR / CASL' },
+]
 
 function App() {
   const [theme, setTheme] = useState<Theme>('dark')
   const [authMode, setAuthMode] = useState<AuthMode>('login')
   const [isAuthed, setIsAuthed] = useState<boolean>(false)
   const [autoTheme, setAutoTheme] = useState<boolean>(true)
+  const [featuresOpen, setFeaturesOpen] = useState<boolean>(false)
   const location = useLocation()
 
   useEffect(() => {
@@ -91,6 +128,10 @@ function App() {
     return () => observer.disconnect()
   }, [autoTheme, location.pathname])
 
+  useEffect(() => {
+    setFeaturesOpen(false)
+  }, [location.pathname])
+
   const handleThemeToggle = () => {
     setAutoTheme(false)
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
@@ -105,10 +146,23 @@ function App() {
         </div>
         <nav className="nav-links">
           <Link to="/">Home</Link>
-          <Link to="/modules">Modules</Link>
-          <Link to="/automation">Automation</Link>
-          <Link to="/analytics">Analytics</Link>
-          <Link to="/access">Access</Link>
+          <div className={`dropdown ${featuresOpen ? 'open' : ''}`}>
+            <button
+              className="dropdown-trigger"
+              onClick={() => setFeaturesOpen((open) => !open)}
+              aria-expanded={featuresOpen}
+              aria-haspopup="true"
+            >
+              Features <span className="caret">▾</span>
+            </button>
+            <div className="dropdown-menu">
+              {featureLinks.map((item) => (
+                <Link key={item.to} to={item.to} onClick={() => setFeaturesOpen(false)}>
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </div>
           {!isAuthed && <Link to="/login">Login</Link>}
           {!isAuthed && <Link to="/signup">Sign up</Link>}
           {isAuthed && <Link to="/signout">Sign out</Link>}
@@ -131,6 +185,13 @@ function App() {
           path="/"
           element={
             <>
+              <div className="page-summary card">
+                <h2>Everything you need to prompt, automate, and measure.</h2>
+                <p className="muted">
+                  Craft channel-ready prompts, automate publishing with guardrails, and monitor impact across SEO, social,
+                  email/SMS, and app stores—all in one workspace.
+                </p>
+              </div>
               <Hero />
               <PromptEngine />
               {isAuthed && (
@@ -151,6 +212,7 @@ function App() {
         <Route path="/login" element={<StandaloneAuth mode="login" setAuthed={setIsAuthed} />} />
         <Route path="/signup" element={<StandaloneAuth mode="signup" setAuthed={setIsAuthed} />} />
         <Route path="/signout" element={<SignoutPage setAuthed={setIsAuthed} />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
@@ -190,6 +252,15 @@ function Hero() {
             <div className="muted">with citation builder</div>
           </div>
         </div>
+      </div>
+      <div className="hero-visual">
+        <div className="visual-frame">
+          <div className="orbit glow" />
+          <div className="orbit spectrum" />
+          <img src={logo} alt="ICYCON emblem" className="hero-image" />
+          <div className="orbit ring" />
+        </div>
+        <p className="muted">Craft prompts, ship everywhere, stay compliant.</p>
       </div>
     </section>
   )
@@ -604,6 +675,81 @@ function SignoutPage({ setAuthed }: { setAuthed: (val: boolean) => void }) {
           <button className="btn ghost wide" onClick={() => navigate('/login')}>
             Login
           </button>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function AboutPage() {
+  return (
+    <section className="about anchor-target">
+      <div className="about-hero">
+        <div className="about-orb orb-a" />
+        <div className="about-orb orb-b" />
+        <div className="about-copy">
+          <p className="eyebrow">About ICYCON</p>
+          <h2>Building a prompting OS for every growth team.</h2>
+          <p className="lede">
+            ICYCON blends structured prompts, automation, and compliance guardrails so founders and operators can ship
+            faster across SEO, social, email/SMS, and app stores.
+          </p>
+          <div className="about-cta">
+            <button className="btn primary">See our story</button>
+            <button className="btn ghost">Meet the team</button>
+          </div>
+        </div>
+        <div className="about-visual card">
+          <div className="panel-head">
+            <p className="eyebrow">What we do</p>
+            <h4>Ops-ready prompting</h4>
+          </div>
+          <ul className="list">
+            <li>
+              <span className="dot" />
+              Reusable business profiles feed prompts and automations.
+            </li>
+            <li>
+              <span className="dot" />
+              Compliance guardrails (GDPR / CASL / CAN-SPAM) on by default.
+            </li>
+            <li>
+              <span className="dot" />
+              Scheduling, sitemaps, and submissions shipped automatically.
+            </li>
+          </ul>
+          <div className="about-badges">
+            <span className="pill gradient thin">Cross-channel</span>
+            <span className="pill subtle thin">LLM-safe</span>
+            <span className="pill subtle thin">API-friendly</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="about-grid">
+        <div className="card about-card">
+          <p className="eyebrow">Mission</p>
+          <h3>Ship intent to every channel with guardrails.</h3>
+          <p className="muted">
+            We turn prompts into channel-ready outputs, wired to publish and stay compliant—so teams move faster without
+            trading off safety.
+          </p>
+        </div>
+        <div className="card about-card">
+          <p className="eyebrow">Team</p>
+          <h3>Ops, growth, and AI operators.</h3>
+          <p className="muted">
+            Built by practitioners from search, lifecycle, and platform safety. We obsess over durable automations and
+            clean data.
+          </p>
+        </div>
+        <div className="card about-card">
+          <p className="eyebrow">Approach</p>
+          <h3>Structured prompts + automation.</h3>
+          <p className="muted">
+            Templates, runbooks, and policy gates keep every prompt on-brand, on-road, and ready to ship to snippets,
+            feeds, inboxes, and stores.
+          </p>
         </div>
       </div>
     </section>
